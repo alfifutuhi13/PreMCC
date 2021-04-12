@@ -1,0 +1,298 @@
+//Assignment 3 Pre-MCC
+using System;
+					
+public class Program
+{
+	//Interface Class
+	public interface IEnd //untuk kalimat penutup
+	{
+		void endMenu();
+	}
+	
+	//MENU AWAL
+	class Menu : IEnd //Menu merupakan subclass dari IEnd
+	{
+		//interface subclass
+		public void endMenu() //Menu Restart
+		{
+			Console.WriteLine("Apakah Anda ingin mengulang program? Ketik y untuk melanjutkan");
+		}
+		//variabel
+		protected int i; //sebagai iterator
+		protected int hasil;
+		private int count = -1;//get?
+		
+		//Constructor
+		public Menu()
+		{
+			count++;
+		}
+		
+		//Method-method
+		public void initiateMenu()
+		{
+			Console.WriteLine("Pilih angka berikut untuk menjalankan perintah\n");
+			
+			Console.WriteLine("1. Print Nilai Factorial");
+			Console.WriteLine("2. Print Deret Fibonacci");
+			Console.WriteLine("3. Menghitung Banyaknya Bilangan Prima dalam Rentang 2 Input");
+		}
+		
+		//Method overload dan akan dioverride nanti
+		public virtual int perintah(int a)
+		{
+			return hasil;
+		}
+		
+		public virtual int perintah(int a, int b)
+		{
+			return hasil;
+		}
+		
+	}
+	
+	//Menu 1: Factorial. Menu 1 merupakan subclass dari Menu dan subsubclass dari IEnd
+	class Menu1 : Menu 
+	{
+		//variabel
+		private int factorial = 1;
+		
+		//Method override
+		public override int perintah(int num)
+		{
+			if (num<0 || num==0){
+				if (num<0)
+				{
+					Console.WriteLine("Faktorial tidak bisa dioperasikan pada bilangan negatif");
+				}
+				else
+				{
+					hasil = factorial;
+				}
+			}
+			else
+			{
+				for (i=1; i<=num; i++)
+				{
+					factorial *= i;
+				}
+				
+				hasil = factorial;
+			}
+			return hasil;
+		}
+		
+		//interface di subsubclass
+		public void endMenu()
+		{
+			Console.WriteLine("Program mencari nilai faktorial dari suatu bilangan selesai.");
+		}
+	}
+	
+	//Menu 2: Deret Fibonacci
+	class Menu2 : Menu
+	{
+		//variabel
+		private int nFibo; //banyaknya suku fibonacci
+		private int n1 = 0; //bilangan fibonacci pertama
+		private int n2 = 1; //bilangan fibonacci kedua
+		private int nth;
+		private int banyakN = 0 ; //banyaknya suku fibonacci kondisi saat i
+		
+		//method override
+		public override int perintah(int a)
+		{
+			nFibo = a;
+			
+			if (nFibo <0 || nFibo == 0) 
+			{
+				Console.WriteLine("Tolong hanya masukkan bilangan positif!");
+			}
+			else if (nFibo == 1) 
+			{
+				Console.WriteLine("Deret Fibonacci: ");
+				Console.Write(n1 + "\n");
+			}
+			else 
+			{
+				Console.WriteLine("Deret Fibonacci: ");
+				
+				while (banyakN<nFibo)
+				{
+					//print deret fibonacci
+					Console.Write(n1 + " ");
+					
+					//update value nth, n2, n1
+					nth = n1+n2;
+					n1 = n2;
+					n2 = nth;
+					
+					banyakN++;
+				}
+				Console.WriteLine("");
+			}
+		
+			return hasil;
+		}
+		
+		//interface di subsubclass
+		public void endMenu()
+		{
+			Console.WriteLine("Program mencetak deret fibonacci selesai.");
+		}
+	}
+	
+	//Menu 3: Menghitung Banyaknya bilangan prima dalam rentang 2 input
+	class Menu3 : Menu
+	{
+		private int banyakPrima = 0;
+		private int batasBawah;
+		private int batasAtas;
+		private int check; //variabel pengecek kalau iterator i adalah prima atau bukan
+		private int j; //iterator kedua
+		
+		public override int perintah (int inp1, int inp2)
+		{
+			batasBawah = inp1;
+			batasAtas = inp2;
+			if (batasBawah == 0)
+			{
+				inp1++; //karena nol sudah pasti bukan bilangan prima
+			}
+			
+			for (i = inp1; i<=inp2; i++)
+			{
+				if (i==1)
+				{
+					continue; //angka 1 diskip karena bukan prima dan akan menggangu perhitungan kalau tidak diskip
+				}
+				check = 1; //Kalau check berubah jadi nol, maka i bukan prima. Tapi kalau check tetap 1, maka i adalah prima
+				
+				for (j = 2; j<=Math.Floor((double)i/2)+1; j++)
+				{
+					if (i==2) //agar 2 masuk ke dalam bilangan prima
+					{
+						break;
+					}
+					else if (i%j == 0)
+					{
+						check = 0;
+						break;
+					}
+				}
+			if (check == 1)
+			{
+				banyakPrima++;
+				Console.Write(i + " ");
+			}	
+				
+			}
+			hasil = banyakPrima;
+			Console.WriteLine("");
+			
+			return hasil;
+		}
+		
+		//interface di subsubclass
+		public void endMenu()
+		{
+			Console.WriteLine("Program menghitung banyaknya deret bilangan prima selesai.");
+		}
+	}
+	
+	//MAIN METHOD
+	public static void Main()
+	{
+		while(true)
+		{
+			//Bagian 1: Menu pilihan
+			Menu m = new Menu();
+			m.initiateMenu();
+			
+			//
+			Console.Write("Pilih menu: ");
+			int inputMenu = Convert.ToInt32(Console.ReadLine());
+			
+			//Bagian 2: Pilihan menu
+			switch(inputMenu)
+			{
+				case 1:
+					//Factorial
+					Console.WriteLine("Masukkan angka yang ingin dihitung factorialnya");
+					int inp1 = Convert.ToInt32(Console.ReadLine());
+					
+					Menu1 m1 = new Menu1();
+					
+					//Untuk memperingati user kalau memasukkan nilai negatif
+					if (inp1 <0)
+					{
+						m1.perintah(inp1);
+						Console.WriteLine("");
+					}
+					else{
+						Console.WriteLine(inp1 + "! = " + m1.perintah(inp1) + "\n");
+					}
+					
+					m1.endMenu();
+					Console.WriteLine("");
+					
+				break;
+				
+				case 2:
+					//Deret Fibonacci
+					Console.WriteLine("Masukkan banyaknya suku deret fibonacci yang diinginkan");
+					int inp2 = Convert.ToInt32(Console.ReadLine());
+					
+					Menu2 m2 = new Menu2();
+					
+					m2.perintah(inp2);
+					Console.WriteLine("");
+					m2.endMenu();
+					Console.WriteLine("");
+					
+				break;
+				
+				case 3:
+					//Prima
+					Console.WriteLine("Masukkan batas bawahnya");
+					int inp31 = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine(" ");
+					Console.WriteLine("Masukkan batas bawahnya");
+					int inp32 = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine(" ");
+					
+					Menu3 m3 = new Menu3();
+					
+					Console.WriteLine("Banyaknya bilangan prima: " + m3.perintah(inp31,inp32));
+					//m3.perintah(inp31,inp32);
+					Console.WriteLine("");
+					m3.endMenu();
+					Console.WriteLine("");
+								
+				break;
+				
+				
+				default:
+					//input selain 1-4
+					Console.WriteLine("Tolong hanya pilih antara menu 1-3!");
+				break;
+			}
+			
+			//Bagian 3: Menu Restart
+			m.endMenu();
+			string inputRestart = Console.ReadLine();
+			
+			if (inputRestart == "y")
+			{
+				Console.WriteLine("");
+				continue; //Loop dilanjutkan
+			}
+			else
+			{
+				Console.WriteLine("Program telah selesai.");
+				break; //Loop diberhentikan
+			}
+			
+		}
+	}
+}
