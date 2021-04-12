@@ -1,0 +1,242 @@
+//Assignment 1 Pre-MCC
+using System;
+					
+public class Program
+{
+	public static void Main(string[] args)
+	{
+		// BAGIAN 1
+		// do-while loop agar memastikan munculnya menu minimal sekali
+		do{
+			//Print menu yang ditampilkan di awal running
+            Console.WriteLine("Pilih Menu \n") ;
+
+            Console.WriteLine("1. Print Bilangan Ganjil Genap") ;
+            Console.WriteLine("2. Print Bilangan Kelipatan 3 dan 5") ;
+            Console.WriteLine("3. Print Rata-rata") ;
+            Console.WriteLine("4. Menjumlahkan Angka Yang Dimasukkan") ;
+            Console.WriteLine("5. Kelipatan Terkecil Dari 2 Input \n") ;
+
+            //Membaca Input dari user
+            int inputMenu = Convert.ToInt32(Console.ReadLine()) ; //Setiap input memiliki tipe data string, sehingga kalau diinginkan tipe data integer, harus diconvert terlebih dahulu
+            Console.WriteLine("\n") ;
+
+            //Pengecekan input dari user, apakah sesuai menu pilihannya atau tidak. Jika sesuai, akan dilanjutkan. Jika tidak, akan diberi peringatan untuk memasukkan input sesuai menu yang tertera
+            //Menggunakan switch karena pilihan menunya cukup banyak dan pilihan angkanya pasti (yaitu 1 hingga 5)
+            switch(inputMenu){
+				case 1:
+					printGanjilGenap(); //Method untuk menggunakan fungsi sesuai dengan menunya. Di case 1 ini, print bilangan ganjil dan genap
+                        
+                break; //break bertujuan agar menghentikan case 1 ketika seluruh statement sudah dijalankan, begitu pula untuk break di case selanjut-selanjutnya.
+
+                case 2:
+                	printKelipatan3Dan5();           		
+                   	      
+                break;
+
+                case 3:
+                	printRata2();
+                        
+                break;
+
+                case 4:
+                	jumlahAngka();
+
+                break;
+
+                case 5:
+                	mencariKelipatanTerkecil();
+
+                break;
+
+                default:
+                	 Console.WriteLine("Harap Input Angka Antara 1-5 \n") ;
+                break;
+			}
+			
+			//BAGIAN 2
+            //Menu akhir dan menanyakan user apakah ingin mengulang menu awal atau tidak
+			Console.WriteLine("Ketikkan Restart Untuk Mengulang Program");
+
+            // Input
+            string inputRestart = Console.ReadLine(); 
+			
+			//Cek inputnya, apakah mau restart atau tidak
+            if(inputRestart == "restart"){
+                Console.WriteLine("") ;
+				continue; //mengulang loop do-whilenya
+            }
+            else{
+				Console.WriteLine("") ;
+				Console.WriteLine("Program selesai") ;
+                break; //keluar dari loop do-whilenya
+            }
+
+            //break; //Sementara
+            }while(true); //Akan selalu diulangi, sampai ada perintah break di if-else di atas
+		}
+
+	
+	
+        // Method-method yang sesuai dengan pilihan menu di atas
+
+	
+        //Menu 1. Method print bilangan ganjil dan genap
+        static void printGanjilGenap(){
+			//Input angka akhir yang diinginkan
+            Console.WriteLine("Masukkan Angka");
+			int input = Convert.ToInt32(Console.ReadLine());
+			Console.WriteLine("");
+			
+			//Looping untuk print angka dari 1 sampai input
+			for (int i = 1 ; i<=input ; i++){
+				Console.Write(i) ;
+				
+				//Pengecekan kondisi apakah i adalah ganjil atau genap
+				if (i%2 == 1){
+					Console.WriteLine(" adalah bilangan ganjil") ;
+				}
+				else {
+					Console.WriteLine(" adalah bilangan genap") ;
+				}
+			}
+		}//end void
+	
+	
+		//Menu 2. Method print angka 1 sampai input, tapi ada kondisi khusus ketika kelipatan 3 dan 5
+		static void printKelipatan3Dan5(){
+			//Input angka akhir yang diinginkan
+			Console.WriteLine("Masukkan Angka");
+			int input = Convert.ToInt32(Console.ReadLine());
+			Console.WriteLine("");
+			
+			//Looping untuk print angka dari 1 sampai input
+			for (int i = 1 ; i<=input ; i++) {
+				//Pengecekan kondisi
+				if (i%3 == 0 && i%5 ==0){ //Apakah i kelipatan 3 dan 5?
+					Console.WriteLine("Pre-MCC");
+				}
+				else if (i%3 == 0 && i%5 !=0) { //Apakah i hanya kelipatan 3?
+					Console.WriteLine("Pre");
+				}
+				else if (i%3 != 0 && i%5 == 0) { //Apakah i hanya kelipatan 5?
+					Console.WriteLine("MCC");
+				}
+				else {
+					Console.WriteLine(i);
+				}
+				
+			}
+		
+		}//end void
+	
+		//Menu 3. Method print rata-rata dari 1 hingga input
+		static void printRata2(){
+			//Input angka yang diinginkan
+			Console.WriteLine("Masukkan Angka");
+			int input = Convert.ToInt32(Console.ReadLine());
+			Console.WriteLine("");
+			
+			//Deklarasi variabel untuk perhitungan
+			int sum = 0; //Hasil penjumlahan
+			float mean = 0; //Hasil dari rata-rata
+			
+			//Perhitungan penjumlahan dari 1 hingga input
+			for (int i=1; i<=input; i++){
+				sum += i;
+			}
+			
+			//Perhitungan rata-rata
+			mean = (float) sum / input ;
+			
+			
+			//Print hasil
+			Console.Write("Hasil penjumlahan 1-");
+			Console.Write(input);
+			Console.Write(" adalah ");
+			Console.Write(sum);
+			Console.WriteLine("");
+			
+			Console.Write("Hasil Rata-rata 1-");
+			Console.Write(input);
+			Console.Write(" adalah ");
+			Console.Write(mean);
+			Console.WriteLine("\n");
+		}//end void
+	
+	
+		//Menu 4. Method menjumlahkan seluruh digit angka yang dimasukkan.
+		static void jumlahAngka(){
+			//Input angka yang diinginkan
+			Console.WriteLine("Masukkan Angka");
+			int input = Convert.ToInt32(Console.ReadLine()) ;
+			Console.WriteLine("");
+			
+			//Deklarasi Variabel
+			int sum = 0;
+			int angka = input;
+			
+			//Loop untuk menjumlahkan seluruh digit angka input
+			while (angka!=0){
+				//jumlah dari digit paling akhir ke depan
+				int digitN = angka%10;
+				sum = sum + digitN;
+				
+				//Menghapus digit akhir
+				angka = (angka / 10) - (digitN / 10);
+			}
+			
+			Console.Write("Penjumlahan dari angka ");
+			Console.Write(input);
+			Console.Write(" = ");
+			Console.Write(sum);
+			Console.WriteLine("");
+			
+		}//end void
+	
+		
+		//Menu 5. Mencari Kelipatan Terkecil dari 2 input
+		static void mencariKelipatanTerkecil(){
+			//Input 2 angka yang diinginkan
+			Console.WriteLine("Masukkan bilangan pertama \n") ;
+			int input1 = Convert.ToInt32(Console.ReadLine());
+			Console.WriteLine("Masukkan bilangan kedua \n") ;
+			int input2 = Convert.ToInt32(Console.ReadLine());
+			Console.WriteLine("");
+			
+			//variable angka kelipatan
+			int angkaKelipatan = 0;
+			
+			//Looping
+			if ((input1>input2) && (input1!=0) && (input2!=0)){
+				for (int i = input1; i<=(input1*input2) ; i++){
+					if ((i%input1 == 0) && (i%input2 == 0)){
+						angkaKelipatan = i;
+						break;
+					}
+				}
+			}
+			else if((input2>input1) && (input1!=0) && (input2!=0)){
+				for (int i = input2; i<=(input1*input2) ; i++){
+					if ((i%input1 == 0) && (i%input2 == 0)) {
+						angkaKelipatan = i;
+						break;
+					}	
+				}
+			}
+			else {
+				angkaKelipatan = 0;
+			}
+			
+			//Print hasilnya
+			Console.Write("Kelipatan Terkecil dari ");
+			Console.Write(input1);
+			Console.Write(" dan ");
+			Console.Write(input2);
+			Console.Write(" = ");
+			Console.Write(angkaKelipatan);
+			Console.WriteLine("");
+				
+		}//end void
+	
+}
