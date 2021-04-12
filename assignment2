@@ -1,0 +1,338 @@
+//Assignment 2 Pre-MCC
+using System;
+					
+public class Program
+{
+	// MENU AWAL
+	public class Menu //Parent Class
+	{
+		protected int i; //nanti akan diinherit ke child class
+		
+		public virtual void endMenu() //Polymorphism parent
+		{
+			//Program selesai, akan dibedakan berdasarkan programnya
+		}
+		
+/*		public virtual void endMenu(string inputRestart)
+		{
+			//Cek inputnya, apakah mau restart atau tidak
+			
+			//m.endMenu();
+            if(inputRestart == "restart"){
+                Console.WriteLine("") ;
+				continue; //mengulang loop do-whilenya
+            }
+            else{
+				Console.WriteLine("") ;
+				Console.WriteLine("Program selesai") ;
+                break; //keluar dari loop do-whilenya
+            }
+		}*/
+		
+		
+		public static void initiateMenu(){
+			//Print menu yang ditampilkan di awal running
+			Console.WriteLine("Pilih Menu \n") ;
+
+			Console.WriteLine("1. Print Bilangan Ganjil Genap") ;
+			Console.WriteLine("2. Print Bilangan Kelipatan 3 dan 5") ;
+			Console.WriteLine("3. Print Rata-rata") ;
+			Console.WriteLine("4. Menjumlahkan Digit Angka Yang Dimasukkan") ;
+			Console.WriteLine("5. Kelipatan Terkecil Dari 2 Input \n") ;
+		
+		}
+	}
+	
+	//MENU 1: Program print ganjil genap
+	class Menu1 : Menu //Child Classs
+	{
+		
+		public Menu1(int inp)
+		{
+			//Looping untuk print angka dari 1 sampai input
+			for (i = 1 ; i<=inp ; i++){
+				Console.Write(i) ;
+				
+				//Pengecekan kondisi apakah i adalah ganjil atau genap
+				if (i%2 == 1){
+					Console.WriteLine(" adalah bilangan ganjil") ;
+				}
+				else {
+					Console.WriteLine(" adalah bilangan genap") ;
+				}
+			}
+		}
+		
+		
+		public override void endMenu()
+		{
+			Console.WriteLine("Program print ganjil genap telah berhasil.\n");
+		}
+		
+		
+	}
+	
+	//MENU 2: Program print kelipatan 3 dan 5
+	class Menu2 : Menu //Child Classs
+	{
+		
+		public Menu2(int inp)
+		{
+			//Looping untuk print angka dari 1 sampai input
+			for (int i = 1 ; i<=inp ; i++) {
+				//Pengecekan kondisi
+				if (i%3 == 0 && i%5 ==0){ //Apakah i kelipatan 3 dan 5?
+					Console.WriteLine("Pre-MCC");
+				}
+				else if (i%3 == 0 && i%5 !=0) { //Apakah i hanya kelipatan 3?
+					Console.WriteLine("Pre");
+				}
+				else if (i%3 != 0 && i%5 == 0) { //Apakah i hanya kelipatan 5?
+					Console.WriteLine("MCC");
+				}
+				else {
+					Console.WriteLine(i);
+				}
+				
+			}
+		}
+		
+		public override void endMenu() //Polymorphism child
+		{
+			Console.WriteLine("Program print bilangan kelipatan 3 dan 5 telah berhasil.\n");
+		}
+		
+		
+	}
+	
+	//MENU 3: Program Mencari rata-rata
+	class Menu3 : Menu //Child Class
+	{
+		private int sum;
+		private float mean;
+		
+		public Menu3(int inp)
+		{
+			//Deklarasi variabel untuk perhitungan
+			sum = 0; //Hasil penjumlahan
+			mean = 0; //Hasil dari rata-rata
+			
+			//Perhitungan penjumlahan dari 1 hingga input
+			for (int i=1; i<=inp; i++){
+				sum += i;
+			}
+			
+			//Perhitungan rata-rata
+			mean = (float) sum / inp ;
+			
+			
+			//Print hasil
+			Console.Write("Hasil penjumlahan 1-");
+			Console.Write(inp);
+			Console.Write(" adalah ");
+			Console.Write(sum);
+			Console.WriteLine("");
+			
+			Console.Write("Hasil Rata-rata 1-");
+			Console.Write(inp);
+			Console.Write(" adalah ");
+			Console.Write(mean);
+			Console.WriteLine("\n");
+		}
+		
+		
+		public override void endMenu() //Polymorphism child
+		{
+			Console.WriteLine("Program print rata-rata input telah berhasil.\n");
+		}
+		
+	}
+	
+	
+	//MENU 4: Menjumlahkan Digit angka yang dimasukkan
+	class Menu4 : Menu //Child Class
+	{
+		private int sum;
+		private int angka;
+		private int digitN;
+		
+		public Menu4(int inp)
+		{
+			//Deklarasi Variabel
+			angka = inp; 
+			
+			//Loop untuk menjumlahkan seluruh digit angka input
+			while (angka!=0){
+				//jumlah dari digit paling akhir ke depan
+				digitN = angka%10;
+				sum = sum + digitN;
+				
+				//Menghapus digit akhir
+				angka = (angka / 10) - (digitN / 10);
+			}
+			
+			Console.Write("Penjumlahan dari angka ");
+			Console.Write(inp);
+			Console.Write(" = ");
+			Console.Write(sum);
+			Console.WriteLine("");
+			
+		}
+		
+		
+		public override void endMenu() //Polymorphism child
+		{
+			Console.WriteLine("Program penjumlahan digit angka yang dimasukkan telah berhasil.\n");
+		}
+	}
+	
+	//MENU5: Program Mencari Kelipatan terkecil dari 2 input
+	class Menu5 : Menu
+	{
+		private int angkaKelipatan; //Representasi KPK
+		
+		public Menu5(int inp1, int inp2)
+		{
+			
+			//Looping
+			if ((inp1>inp2) && (inp1!=0) && (inp2!=0)){
+				for (int i = inp1; i<=(inp1*inp2) ; i++){
+					if ((i%inp1 == 0) && (i%inp2 == 0)){
+						angkaKelipatan = i;
+						break; //agar keluar dari loop
+					}
+				}
+			}
+			else if((inp2>inp1) && (inp1!=0) && (inp2!=0)){
+				for (int i = inp2; i<=(inp1*inp2) ; i++){
+					if ((i%inp1 == 0) && (i%inp2 == 0)) {
+						angkaKelipatan = i;
+						break;
+					}	
+				}
+			}
+			else {
+				angkaKelipatan = 0;
+			}
+			
+			//Print hasilnya
+			Console.Write("Kelipatan Terkecil dari ");
+			Console.Write(inp1);
+			Console.Write(" dan ");
+			Console.Write(inp2);
+			Console.Write(" = ");
+			Console.Write(angkaKelipatan);
+			Console.WriteLine("");
+		}
+		
+		
+		
+		public override void endMenu() //Polymorphism child
+		{
+			Console.WriteLine("Program mencari kelipatan terkecil dari dua input berhasil.\n");
+		}
+	}
+	
+	//PROGRAM MAIN
+	public static void Main(string[] args)
+	{
+		// BAGIAN 1: Tampilan menu
+		do{
+			//Print menu yang ditampilkan di awal running	
+			Menu.initiateMenu();
+
+            //Membaca Input dari user untuk memilih pilihan menu
+            int inputMenu = Convert.ToInt32(Console.ReadLine()) ; //Setiap input memiliki tipe data string, sehingga kalau diinginkan tipe data integer, harus diconvert terlebih dahulu
+            Console.WriteLine("\n") ;
+
+            //Pengecekan input dari user
+            //Menggunakan switch karena pilihan menunya cukup banyak dan pilihan angkanya pasti (yaitu 1 hingga 5)
+            switch(inputMenu){
+				case 1:
+					//Input angka akhir yang diinginkan
+           			Console.WriteLine("Masukkan Batas akhir angka yang diinginkan");
+					int input1 = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine("");
+					
+					Menu1 m1 = new Menu1(input1) ;
+					
+					m1.endMenu();
+					
+                break; //break bertujuan agar menghentikan case 1 ketika seluruh statement sudah dijalankan, begitu pula untuk break di case selanjut-selanjutnya.
+
+                case 2:
+                	//Input angka akhir yang diinginkan
+           			Console.WriteLine("Masukkan Batas akhir angka yang diinginkan");
+					int input2 = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine("");
+					
+					Menu m2 = new Menu2(input2);
+					
+					m2.endMenu();
+					
+					
+                break;
+
+                case 3:
+					//Input angka akhir yang diinginkan
+           			Console.WriteLine("Masukkan Batas akhir angka yang diinginkan");
+					int input3 = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine("");
+					
+					Menu m3 = new Menu3(input3);
+					
+					m3.endMenu();
+					
+                break;
+
+                case 4:
+                	Console.WriteLine("Masukkan Angka yang digitnya ingin dijumlahkan (disarankan lebih dari dua digit untuk melihat perbedaannya)");
+					int input4 = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine("");
+					
+					Menu m4 = new Menu4(input4);
+					
+					m4.endMenu();
+					
+                break;
+
+                case 5:
+					Console.WriteLine("Masukkan Angka yang ingin dicari Kelipatan Persekutuan Terkecilnya");
+					Console.WriteLine("Angka Pertama");
+					int input51 = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine("\nAngka Kedua");
+					int input52 = Convert.ToInt32(Console.ReadLine());
+					Console.WriteLine("");
+					
+					Menu m5 = new Menu5(input51,input52);
+					
+					m5.endMenu();
+					
+                break;
+
+                default:
+                	 Console.WriteLine("Harap Input Angka Antara 1-5 \n") ;
+                break;
+			}
+			
+			//BAGIAN 2: Menu akhir dan menanyakan user apakah ingin mengulang menu awal atau tidak
+			Console.WriteLine("Ketikkan Restart Untuk Mengulang Program");
+
+            // Input
+            string inputRestart = Console.ReadLine(); 
+			
+			//Cek inputnya, apakah mau restart atau tidak
+            if(inputRestart == "restart"){
+                Console.WriteLine("") ;
+				continue; //mengulang loop do-whilenya
+            }
+            else{
+				Console.WriteLine("") ;
+				Console.WriteLine("Program selesai") ;
+                break; //keluar dari loop do-whilenya
+            }
+			
+		}while(true); //Akan selalu diulangi, sampai ada perintah break di if-else di atas
+	}//End dari Main()
+	
+}
